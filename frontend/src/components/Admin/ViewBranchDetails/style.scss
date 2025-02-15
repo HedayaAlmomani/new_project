@@ -1,0 +1,50 @@
+.view-branches-details-container {
+  padding: 20px;
+  .header {
+    background: linear-gradient(135deg, #f7971e, #ff512f);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex !important;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+  .container-of-image {
+    display: flex !important;
+    flex-direction: row;
+    justify-content: center;
+
+    width: 100%;
+  }
+  .item-image {
+    width: auto;
+    height: 200px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    object-fit: cover;
+    scale: 85%;
+    border-radius: 100px;
+  }
+
+  .description {
+    padding: 0px 30px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgb(1, 0, 24);
+  }
+
+  .items-details {
+    padding: 20px;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    grid-row-gap: 20px;
+    grid-column-gap: 20px;
+  }
+}

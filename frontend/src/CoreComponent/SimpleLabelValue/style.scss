@@ -1,0 +1,17 @@
+.simple-label-value-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+
+  .label {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgb(160, 160, 160);
+  }
+
+  .value {
+    font-size: 14px;
+    color: rgb(1, 0, 24);
+  }
+}

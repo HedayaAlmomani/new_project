@@ -1,0 +1,47 @@
+$fillColor: #5e503f;
+
+.range-container {
+  width: 280px;
+}
+.input-range--custom {
+  -webkit-appearance: none;
+  width: 100%;
+  margin: 4px 0;
+  background-image: linear-gradient(
+    to right,
+    $fillColor,
+    $fillColor 48%,
+    rgb(221, 221, 221) 48%
+  );
+  border-radius: 20px 20px 0px 0px;
+}
+
+.input-range--custom:focus {
+  outline: none;
+}
+
+.input-range--custom::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 3px;
+  cursor: pointer;
+}
+
+.input-range--custom:after {
+  width: 20%;
+  height: 3px;
+  background-color: $fillColor;
+}
+
+.input-range--custom::-webkit-slider-thumb {
+  height: 13px;
+  width: 13px;
+  border-radius: 15px;
+  background: #ffffff;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -5.5px;
+  background: $fillColor;
+  border: 1px solid #ffffff;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
+}

@@ -1,0 +1,39 @@
+.circular-checkbox {
+  position: relative;
+}
+
+.circular-checkbox input[type='checkbox'] {
+  display: none;
+}
+
+.circular-checkbox label {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  position: relative;
+  z-index: 1;
+  background-color: white;
+}
+
+.circular-checkbox input[type='checkbox']:checked + label::after {
+  content: '';
+  width: 9px;
+  height: 9px;
+  background-image: url('../../icons/correctSign.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 4px;
+}
+
+.circular-checkbox input[type='checkbox']:checked + label {
+  background-color: #4d75d8;
+  border: 1px solid #4d75d8;
+}

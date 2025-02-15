@@ -1,0 +1,23 @@
+<svg width="80" height="80" viewBox="0 0 79 79" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_107_972)">
+<path d="M37 49C47.4934 49 56 40.4934 56 30C56 19.5066 47.4934 11 37 11C26.5066 11 18 19.5066 18 30C18 40.4934 26.5066 49 37 49Z" fill="#EBECF2"/>
+<path d="M27 25V31" stroke="#D8DAE6" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M30 28H24" stroke="#D8DAE6" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M68 34V40" stroke="#D8DAE6" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M71 37H65" stroke="#D8DAE6" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M18 64H39C41.88 64 52.25 60.91 53.39 60.1C54.48 59.33 61.23 51.63 62.89 49.34C62.44 48.25 60.81 47.22 58.53 47.48C55.89 47.79 52.58 52.79 52.47 52.89L44.42 54.71C44.16 54.65 41.31 53.74 38.59 53.04C37.65 52.8 36.12 50.7 36.12 50.53C36.12 49.54 36.47 49.58 38.15 48.7C39.25 48.12 42.71 47.5 43.92 44.73C45.03 42.2 44.31 39.73 39.8 41.52C37.93 42.26 29.92 44.56 26.46 45.96C25.12 47.25 23.25 49.99 21.88 50.99H17.99V63.99L18 64Z" fill="white" stroke="#08152E" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M44.52 29.42C44.52 26.78 42.38 24.65 39.75 24.65C37.12 24.65 34.98 26.79 34.98 29.42C34.98 32.05 37.12 34.19 39.75 34.19C42.38 34.19 44.52 32.05 44.52 29.42Z" fill="#8EAAF1" stroke="#08152E" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M59.75 19.33C59.75 16.69 57.61 14.56 54.98 14.56C52.35 14.56 50.21 16.7 50.21 19.33C50.21 21.96 52.35 24.1 54.98 24.1C57.61 24.1 59.75 21.96 59.75 19.33Z" fill="#8EAAF1" stroke="#08152E" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M53.22 43.53C55.8544 43.53 57.99 41.3944 57.99 38.76C57.99 36.1256 55.8544 33.99 53.22 33.99C50.5856 33.99 48.45 36.1256 48.45 38.76C48.45 41.3944 50.5856 43.53 53.22 43.53Z" fill="#8EAAF1" stroke="#08152E" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M19 46H9V67H19V46Z" fill="#8EAAF1" stroke="#08152E" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M14 50V53" stroke="#08152E" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M40 20V28" stroke="#08152E" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M40 16V18" stroke="#08152E" stroke-width="2" stroke-miterlimit="10"/>
+<path d="M65 15V30" stroke="#D8DAE6" stroke-width="2" stroke-miterlimit="10"/>
+</g>
+<defs>
+<clipPath id="clip0_107_972">
+<rect width="63" height="57" fill="white" transform="translate(8 11)"/>
+</clipPath>
+</defs>
+</svg>

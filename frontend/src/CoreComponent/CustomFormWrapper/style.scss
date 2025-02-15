@@ -1,0 +1,114 @@
+.custom-form-wrapper {
+  margin: 0 auto;
+  border: 1px solid #e0e0e0;
+  background-color: #f9f9f9;
+  font-family: "Arial", sans-serif;
+  height: 100vh;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+  .information-header {
+    background-color: rgba(245, 245, 245, 0.267);
+    padding: 0px 20px;
+    height: 60px;
+    font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .form-section {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: calc(99vh - 120px);
+    overflow: overlay;
+    background-color: #fff;
+
+    &::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: var(--scrollbar-track-color);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-thumb-color);
+      border-radius: 50px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: var(--scrollbar-thumb-hover-color);
+    }
+  }
+
+  .actions-section-container {
+    height: 64px;
+    background-color: rgba(245, 245, 245, 0.267);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    padding: 0px 20px;
+
+    .cancel-btn {
+      width: 100%;
+      height: 40px;
+      background-color: #fff;
+      border: 1px solid #ff7600;
+      color: #3b3b3b;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+      &:hover {
+        background-color: #ff7f50;
+        color: #fff;
+        border-color: #ff7f50;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      &:active {
+        background-color: #ff6347;
+        color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    .submit-btn {
+      width: 100%;
+      height: 40px;
+      background-color: #ff7600;
+      font-size: 14px;
+      border: 1px solid #ff7f50;
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+      &:hover {
+        background-color: #ff6347;
+        border-color: #ff6347;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      &:active {
+        background-color: #ff4500;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      &:disabled {
+        background-color: #b1b1b1;
+        color: #ffffff9d;
+        cursor: not-allowed;
+        border-color: #d3d3d3;
+      }
+    }
+  }
+}

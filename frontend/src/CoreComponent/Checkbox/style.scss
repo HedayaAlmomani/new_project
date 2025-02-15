@@ -1,0 +1,23 @@
+.checkbox-container {
+  .checkbox-label {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 30px;
+    text-align: left;
+    color: rgb(20, 36, 82);
+    .star {
+      color: red;
+    }
+  }
+  .checkbox-label-container {
+    label {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+  input {
+    cursor: pointer;
+  }
+}

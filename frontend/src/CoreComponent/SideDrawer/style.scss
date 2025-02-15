@@ -1,0 +1,42 @@
+.bm-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(128, 128, 128, 0.163) !important;
+  overflow: hidden !important;
+}
+.bm-menu {
+  overflow-x: hidden !important;
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--scrollbar-track-color);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-color);
+    border-radius: 50px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover-color);
+  }
+}
+.bm-menu-wrap {
+  width: 490px !important;
+  overflow-x: hidden;
+  max-width: 100%;
+}
+.bm-menu-wrap {
+  background-color: #fff;
+  height: 100vh;
+  position: fixed;
+  overflow: hidden;
+  top: 0;
+  bottom: 0;
+}
+

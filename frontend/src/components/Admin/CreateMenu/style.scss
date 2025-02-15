@@ -1,0 +1,136 @@
+.create-menu-container {
+  background-color: var(--bg-color);
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 800px;
+  margin: 1rem auto;
+
+  .create-menu-title {
+    font-size: 24px;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+  }
+
+  .menu-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .add-menu-item-btn {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 250px;
+  }
+
+  .add-menu-item-btn:hover {
+    background-color: var(--primary-hover-color);
+  }
+
+  .menu-items-list {
+    margin-top: 20px;
+  }
+
+  .menu-items-title {
+    font-size: 20px;
+    color: var(--text-color);
+    margin-bottom: 10px;
+  }
+
+  .menu-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+
+  .remove-menu-item-btn {
+    background-color: var(--error-static);
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    height: 40px;
+  }
+
+  .remove-menu-item-btn:hover {
+    background-color: var(--error-hover);
+  }
+  .item-info {
+    width: 70%;        
+    word-wrap: break-word; 
+    white-space: normal;   
+    overflow: hidden;     
+  }
+  @media (max-width: 768px) {
+    .create-menu-container {
+      padding: 15px;
+    }
+
+    .create-menu-title {
+      font-size: 20px;
+    }
+
+    .menu-form {
+      gap: 15px;
+    }
+
+    .add-menu-item-btn {
+      padding: 8px 16px;
+    }
+
+    .menu-items-title {
+      font-size: 18px;
+    }
+
+    .menu-item {
+      padding: 8px;
+    }
+
+    .remove-menu-item-btn {
+      padding: 4px 8px;
+    }
+
+    
+  }
+
+  @media (max-width: 480px) {
+    .create-menu-container {
+      padding: 10px;
+    }
+
+    .create-menu-title {
+      font-size: 18px;
+    }
+
+    .menu-form {
+      gap: 10px;
+    }
+
+    .add-menu-item-btn {
+      padding: 6px 12px;
+      width: unset;
+    }
+
+    .menu-items-title {
+      font-size: 16px;
+    }
+
+    .menu-item {
+      padding: 6px;
+    }
+
+    .remove-menu-item-btn {
+      padding: 3px 6px;
+    }
+  }
+}

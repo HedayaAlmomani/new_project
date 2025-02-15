@@ -1,0 +1,25 @@
+.create-branch-container {
+  background-color: var(--bg-color);
+  border-radius: 8px;
+
+  .branch-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .add-branch-btn {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 250px;
+  }
+
+  .add-branch-btn:hover {
+    background-color: var(--primary-hover-color);
+  }
+}

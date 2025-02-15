@@ -1,0 +1,107 @@
+.container-item-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  @media (max-width: 768px) {
+    padding: 0 10px;
+  }
+  .item-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #fff;
+    max-width: 350px;
+    width: 220px;
+    padding: 15px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 0px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+    @media (min-width: 768px) and (max-width: 834px) {
+      width: 100%;
+    }
+    @media (min-width: 853px) and (max-width: 1280px) {
+      width: 100%;
+    }
+    .image-container {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      position: relative;
+    }
+
+    .item-image {
+      width: 165px;
+      height: 165px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: auto;
+    }
+
+    .item-details {
+      padding: 15px 0px 0px 0px;
+
+      .item-name {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+
+      .item-description {
+        font-size: 0.9rem;
+        color: #555;
+        margin-bottom: 8px;
+      }
+
+      .item-category,
+      .item-branch {
+        font-size: 0.8rem;
+        color: #777;
+        margin-bottom: 4px;
+      }
+
+      .item-pricing {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 8px;
+
+        .item-price {
+          font-size: 1rem;
+          font-weight: bold;
+          color: #000;
+        }
+
+        .item-discount {
+          font-size: 0.9rem;
+          color: red;
+          text-decoration: line-through;
+        }
+      }
+
+      .item-extras {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        font-size: 0.9rem;
+        color: #333;
+      }
+    }
+    .card-actions {
+      display: flex;
+      flex-direction: row;
+      justify-content: end;
+      gap: 15px;
+      margin-top: 6px;
+      cursor: pointer;
+    }
+  }
+}

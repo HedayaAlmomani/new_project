@@ -1,0 +1,30 @@
+.register-page-container {
+  .page-title {
+    font-size: 25px;
+    color: var(--element-color);
+  }
+  .register-button {
+    margin-top: 1rem;
+    background-color: var(--primary-color);
+    color: #fff;
+    width: 150px;
+    &:hover {
+      background-color: var(--primary-hover-color);
+    }
+  }
+  .register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .alert-danger {
+    margin-top: 20px;
+  }
+
+  .link-button {
+    color: var(--primary-color);
+    &:hover {
+      color: var(--primary-hover-color);
+    }
+  }
+}
