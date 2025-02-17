@@ -45,56 +45,7 @@ class AuthOtpController extends Controller
         return response()->json(['error' => 'Failed to generate OTP.'], 500);
     }
 
-    // Combined Verify OTP for Login/Register
-    // public function verifyOtp(Request $request)
-    // {
-    //     $request->validate([
-    //         'otp' => 'required|digits:6',  // Ensure OTP is exactly 6 digits
-    //         'mobile_no' => 'required|regex:/^(\+?(\d{1,3}))?(\d{10})$/', // Mobile number validation (ensure proper format)
-    //     ]);
 
-
-
-    //     $user = User::where('mobile_no', $request->mobile_no)->first();
-
-    //     if (!$user) {
-    //         return response()->json(['error' => 'User not found.'], 400);
-    //     }
-
-    //     $userOtp = UserOtp::where('user_id', $user->id)
-    //         ->where('otp', $request->otp)
-    //         ->first();
-
-
-    //     // Validate OTP
-    //     $now = now();
-    //     if (!$userOtp) {
-    //         return response()->json(['error' => 'Invalid OTP.'], 400);
-    //     } elseif ($now->isAfter($userOtp->expire_at)) {
-    //         return response()->json(['error' => 'OTP has expired.'], 400);
-    //     }
-
-    //     // Check if the user already exists
-    //     $user = User::where('mobile_no', $request->mobile_no)->first();
-
-    //     if (!$user) {
-    //         // Create new user if they don't exist
-    //         $user = User::create([
-    //             'mobile_no' => $request->mobile_no
-    //         ]);
-    //     }
-
-    //     // Delete OTP after use
-    //     $userOtp->delete();
-
-    //     // Log in the user
-    //     Auth::login($user);
-
-    //     return response()->json([
-    //         'message' => 'Authentication successful!',
-    //         'user' => $user
-    //     ], 200);
-    // }
     public function verifyOtp(Request $request)
     {
         $request->validate([
