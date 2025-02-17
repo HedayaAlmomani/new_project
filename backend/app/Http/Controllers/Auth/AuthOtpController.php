@@ -10,70 +10,189 @@ use App\Models\UserOtp;
 
 class AuthOtpController extends Controller
 {
-    public function login(){
+    // Show the login page with mobile number
+    public function login()
+    {
         return view('Auth.OtpLogin');
     }
 
-    public function generate(Request $request){
+    // Combined Generate OTP for Login/Register
+    public function generateOtpForLoginRegister(Request $request)
+    {
         $request->validate([
-            'mobile_no' => 'required|exists:users,mobile_no'
+            'mobile_no' => 'required|regex:/^(\+?(\d{1,3}))?(\d{10})$/', // Mobile number validation (ensure proper format)
         ]);
 
+        // Generate OTP
         $userOtp = $this->generateOTP($request->mobile_no);
-        $userOtp->sendSMS($request->mobile_no);
 
-        return redirect()->route('otp.verification',[$userOtp->user_id])->with('success','OTP has been Sent On Your Mobile Number.');
-    }
+        // Ensure OTP object is valid
+        if ($userOtp instanceof UserOtp) {
+            $this->sendSMS($request->mobile_no, $userOtp->otp);
 
-    public function generateOTP($mobile_no){
-        $user = User::where('mobile_no',$mobile_no)->first();
-        $userOtp = UserOtp::where('user_id',$user->id)->latest()->first();
+            // Determine if it's a login or registration
+            $user = User::where('mobile_no', $request->mobile_no)->first();
+            $action = $user ? 'login' : 'register';
 
-        $now = now();
-
-        if ($userOtp && $now->isBefore($userOtp->expire_at)) {
-            return $userOtp;
+            return response()->json([
+                'message' => 'OTP has been sent.',
+                'mobile_no' => $request->mobile_no,
+                'action' => $action
+            ], 200);
         }
 
-        return UserOtp::Create([
-            'user_id' => $user->id,
-            'otp' => rand(123456, 999999),
-            'expire_at' => $now->addMinutes(10)
-        ]);
+        // Error if OTP generation failed
+        return response()->json(['error' => 'Failed to generate OTP.'], 500);
     }
 
-    public function verification($user_id){
-        return view('Auth.OtpVerification')->with([
-            'user_id' => $user_id
-        ]);
-    }
+    // Combined Verify OTP for Login/Register
+    // public function verifyOtp(Request $request)
+    // {
+    //     $request->validate([
+    //         'otp' => 'required|digits:6',  // Ensure OTP is exactly 6 digits
+    //         'mobile_no' => 'required|regex:/^(\+?(\d{1,3}))?(\d{10})$/', // Mobile number validation (ensure proper format)
+    //     ]);
 
-    public function loginWithOtp(Request $request){
+
+
+    //     $user = User::where('mobile_no', $request->mobile_no)->first();
+
+    //     if (!$user) {
+    //         return response()->json(['error' => 'User not found.'], 400);
+    //     }
+
+    //     $userOtp = UserOtp::where('user_id', $user->id)
+    //         ->where('otp', $request->otp)
+    //         ->first();
+
+
+    //     // Validate OTP
+    //     $now = now();
+    //     if (!$userOtp) {
+    //         return response()->json(['error' => 'Invalid OTP.'], 400);
+    //     } elseif ($now->isAfter($userOtp->expire_at)) {
+    //         return response()->json(['error' => 'OTP has expired.'], 400);
+    //     }
+
+    //     // Check if the user already exists
+    //     $user = User::where('mobile_no', $request->mobile_no)->first();
+
+    //     if (!$user) {
+    //         // Create new user if they don't exist
+    //         $user = User::create([
+    //             'mobile_no' => $request->mobile_no
+    //         ]);
+    //     }
+
+    //     // Delete OTP after use
+    //     $userOtp->delete();
+
+    //     // Log in the user
+    //     Auth::login($user);
+
+    //     return response()->json([
+    //         'message' => 'Authentication successful!',
+    //         'user' => $user
+    //     ], 200);
+    // }
+    public function verifyOtp(Request $request)
+    {
         $request->validate([
-            'otp' => 'required',
-            'user_id' =>'required|exists:users,id',
+            'otp' => 'required|digits:6',  // Ensure OTP is exactly 6 digits
+            'mobile_no' => 'required|regex:/^(\+?(\d{1,3}))?(\d{10})$/', // Mobile number validation (ensure proper format)
         ]);
 
-        $userOtp = UserOtp::where('user_id',$request->user_id)->where('otp',$request->otp)->first();
+        // Retrieve OTP record for the mobile number
+        $user = User::where('mobile_no', $request->mobile_no)->first();
 
+        if (!$user) {
+            return response()->json(['error' => 'User not found.'], 400);
+        }
+
+        $userOtp = UserOtp::where('user_id', $user->id)
+            ->where('otp', $request->otp)
+            ->first();
+
+        // Validate OTP
         $now = now();
-        if(!$userOtp){
-            return redirect()->back()->with('error','Please Enter Valid Otp.');
-        }elseif($userOtp && $now->isAfter($userOtp->expire_at)){
-            return redirect()->back()->with('error','Your OTP Has been Expired');
+        if (!$userOtp) {
+            return response()->json(['error' => 'Invalid OTP.'], 400);
+        } elseif ($now->isAfter($userOtp->expire_at)) {
+            return response()->json(['error' => 'OTP has expired.'], 400);
         }
 
-        $user = User::whereId($request->user_id)->first();
+        // Check if the user already exists
+        $user = User::where('mobile_no', $request->mobile_no)->first();
 
-        if ($user) {
-            $userOtp->update([
-                'expire_at' => now()
+        if (!$user) {
+            // Create new user if they don't exist
+            $user = User::create([
+                'mobile_no' => $request->mobile_no
             ]);
-
-            Auth::login($user);
-            return redirect('/home');
         }
 
-        return redirect()->route('otp.login')->with('error','Your Is Not Correct');
+        // Delete OTP after use
+        $userOtp->delete();
+
+        // Log in the user
+        Auth::login($user);
+
+        // Generate a token using Sanctum
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'message' => 'Authentication successful!',
+            'user' => $user,
+            'token' => $token,
+            'token_type' => 'Bearer',
+        ], 200);
+    }
+    // Function to generate OTP
+    private function generateOTP($mobile_no)
+    {
+        $user = User::where('mobile_no', $mobile_no)->first();
+
+        if (!$user) {
+            $user = User::create([
+                'mobile_no' => $mobile_no // Only mobile_no is needed
+            ]);
+        }
+
+        // Create OTP record
+        $userOtp = UserOtp::create([
+            'user_id' => $user->id,
+            'mobile_no' => $mobile_no,
+            'otp' => rand(123456, 999999),
+            'expire_at' => now()->addMinutes(10),
+        ]);
+
+        return $userOtp; // Return OTP object
+    }
+
+    // Function to send SMS using Twilio (mock implementation)
+    private function sendSMS($receiverNumber, $otp)
+    {
+        // This is a mock API. Replace with actual Twilio integration if needed.
+        $message = 'Your OTP is: ' . $otp;
+
+        try {
+            // Example Twilio integration (commented out)
+            // $TwilioSid = env('TWILIO_SID');
+            // $TwilioToken = env('TWILIO_AUTH_TOKEN');
+            // $TwilioNumber = env('TWILIO_NUMBER');
+
+            // $client = new \Twilio\Rest\Client($TwilioSid, $TwilioToken);
+            // $client->messages->create('+91' . $receiverNumber, [
+            //     'from' => $TwilioNumber,
+            //     'body' => $message
+            // ]);
+
+            // Log the OTP for testing purposes
+            \Log::info("OTP sent to $receiverNumber: $message");
+
+        } catch (\Exception $e) {
+            \Log::error("Failed to send OTP: " . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }
