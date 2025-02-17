@@ -1,0 +1,54 @@
+$primary-color: #4CAF50;
+$input-border-color: #ccc;
+$focus-border-color: #4CAF50;
+$input-background-color: #f9f9f9;
+$input-font-size: 18px;
+$input-padding: 10px;
+$input-radius: 8px;
+$input-width: 50px;
+$spacing: 8px;
+
+.otp-input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $spacing;
+  flex-wrap: wrap;
+  max-width: 350px;
+  margin: 0 auto;
+}
+
+.otp-input-box {
+  width: $input-width;
+  height: $input-width;
+  font-size: $input-font-size;
+  padding: $input-padding;
+  text-align: center;
+  border: 2px solid $input-border-color;
+  border-radius: $input-radius;
+  background-color: $input-background-color;
+  transition: all 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: $focus-border-color;
+    background-color: white;
+  }
+
+  &::placeholder {
+    color: transparent;
+  }
+
+  &:disabled {
+    background-color: #f0f0f0;
+    border-color: #ddd;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .otp-input-box {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+}

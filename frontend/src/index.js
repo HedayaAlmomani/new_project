@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import "../node_modules/font-awesome/css/font-awesome.min.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"; // Import useLocation here
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import "./style.scss";
@@ -33,6 +33,7 @@ import MySideMenu from "./components/MySideMenu";
 
 const App = () => {
   const [showLoader, setShowLoader] = useState(false);
+  const location = useLocation(); // useLocation hook here
 
   useEffect(() => {
     const handleShowLoader = () => setShowLoader(true);
@@ -49,44 +50,50 @@ const App = () => {
 
   return (
     <div>
-      <BrowserRouter>
-        <Provider store={store}>
-          <div className="app-container">
-            <MySideMenu />
-            <div className="main-content">
-              <Navbar />
-              <Loader show={showLoader} />
-              <ScrollToTop>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/product" element={<Products />} />
-                  <Route path="/product/:id" element={<Product />} />
-                  <Route path="/about" element={<AboutPage />} />
-                  <Route path="/contact" element={<ContactPage />} />
-                  <Route path="/cart" element={<Cart />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
-                  <Route path="/checkout" element={<Checkout />} />
+      <div className="app-container">
+        {/* {location.pathname !== "/login" && <MySideMenu />} */}
+        <MySideMenu />
+        <div className="main-content">
+          {/* {location.pathname !== "/login" && <Navbar />} */}
+          <Navbar />
+          <Loader show={showLoader} />
+          <ScrollToTop>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/product" element={<Products />} />
+              <Route path="/product/:id" element={<Product />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/checkout" element={<Checkout />} />
 
-                  <Route path="/admin">
-                    <Route path="new/menu" element={<CreateMenu />} />
-                    <Route path="view/menu" element={<MenuViewer />} />
-                    <Route path="view/item" element={<ViewItems />} />
-                    <Route path="view/branches" element={<ViewBranches />} />
-                  </Route>
+              <Route path="/admin">
+                <Route path="new/menu" element={<CreateMenu />} />
+                <Route path="view/menu" element={<MenuViewer />} />
+                <Route path="view/item" element={<ViewItems />} />
+                <Route path="view/branches" element={<ViewBranches />} />
+              </Route>
 
-                  <Route path="*" element={<PageNotFound />} />
-                  <Route path="/product/*" element={<PageNotFound />} />
-                </Routes>
-              </ScrollToTop>
-              <Toaster />
-            </div>
-          </div>
-        </Provider>
-      </BrowserRouter>
+              <Route path="*" element={<PageNotFound />} />
+              <Route path="/product/*" element={<PageNotFound />} />
+            </Routes>
+          </ScrollToTop>
+          <Toaster />
+        </div>
+      </div>
     </div>
   );
 };
 
+const Root = () => (
+  <BrowserRouter>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </BrowserRouter>
+);
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<App />);
+root.render(<Root />);

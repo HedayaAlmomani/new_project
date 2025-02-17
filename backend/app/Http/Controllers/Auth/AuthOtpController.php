@@ -35,6 +35,7 @@ class AuthOtpController extends Controller
             $action = $user ? 'login' : 'register';
 
             return response()->json([
+                'success'=> true,
                 'message' => 'OTP has been sent.',
                 'mobile_no' => $request->mobile_no,
                 'action' => $action
@@ -49,7 +50,7 @@ class AuthOtpController extends Controller
     public function verifyOtp(Request $request)
     {
         $request->validate([
-            'otp' => 'required|digits:6',  // Ensure OTP is exactly 6 digits
+            'otp' => 'required|digits:5',  // Ensure OTP is exactly 6 digits
             'mobile_no' => 'required|regex:/^(\+?(\d{1,3}))?(\d{10})$/', // Mobile number validation (ensure proper format)
         ]);
 
@@ -92,6 +93,7 @@ class AuthOtpController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
+            'success'=> true,
             'message' => 'Authentication successful!',
             'user' => $user,
             'token' => $token,
@@ -113,7 +115,7 @@ class AuthOtpController extends Controller
         $userOtp = UserOtp::create([
             'user_id' => $user->id,
             'mobile_no' => $mobile_no,
-            'otp' => rand(123456, 999999),
+            'otp' => rand(12345, 99999),
             'expire_at' => now()->addMinutes(10),
         ]);
 

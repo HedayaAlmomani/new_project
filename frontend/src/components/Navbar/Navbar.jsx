@@ -47,7 +47,7 @@ const Navbar = () => {
         <NavLink className="navbar-brand fw-bold fs-2" to="/">
           Luxora
         </NavLink>
-        <button
+        {/* <button
           className="navbar-toggler mx-2"
           type="button"
           data-toggle="collapse"
@@ -57,9 +57,9 @@ const Navbar = () => {
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
-        </button>
+        </button> */}
 
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        {/* <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="nav-items-container navbar-nav m-auto my-2 text-center">
             {navItems.map((item, index) =>
               item.dropdown ? (
@@ -109,7 +109,7 @@ const Navbar = () => {
               <i className="fa fa-cart-shopping mr-1"></i> Cart ({state.length})
             </NavLink>
           </div>
-        </div>
+        </div> */}
       </div>
     </nav>
   );

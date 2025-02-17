@@ -1,128 +1,175 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Footer, Navbar } from "../../components";
 import Input from "../../CoreComponent/Input";
 import httpServices from "../../common/httpServices";
 import Toast from "../../CoreComponent/Toast";
 import { useDispatch } from "react-redux";
 import { loginAction } from "../../redux/reducer/auth";
+import { LoginIcon } from "../../icons";
+import SVG from "react-inlinesvg";
+import OTPInput from "../../CoreComponent/OTPInput";
 import "./style.scss";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
+  const [otp, setOtp] = useState("");
   const [error, setError] = useState({
-    email: "",
+    mobileNumber: "",
+    otp: "",
     general: "",
   });
   const [loading, setLoading] = useState(false);
+  const [isOtpSent, setIsOtpSent] = useState(false);
 
   const dispatch = useDispatch();
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+  // TODO fix this function
+  const validateMobileNumber = (number) => {
+    // const mobileRegex = /^(962|\+962)[7-9][0-9]{7}$/;
+    // return mobileRegex.test(number);
+    return true
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError({
-      email: "",
+      mobileNumber: "",
+      otp: "",
       general: "",
     });
 
-    if (!validateEmail(email)) {
+    if (!validateMobileNumber(mobileNumber)) {
       setError((prevState) => ({
         ...prevState,
-        email: "Invalid email format.",
+        mobileNumber: "Invalid mobile number format. Please enter a valid Jordanian number.",
       }));
       return;
     }
 
-    setLoading(true);
-    try {
-      const response = await httpServices.post(
-        "/login",
-        {
-          email,
-          password,
+    if (!isOtpSent) {
+      setLoading(true);
+      try {
+        const response = await httpServices.post(
+          "http://localhost:8000/api/generate-otp",
+          {
+            mobile_no: mobileNumber,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json, text/plain, */*",
+            },
+          }
+        );
+
+        if (response?.data?.success) {
+          setIsOtpSent(true);
+        } else {
+          setError((prevState) => ({
+            ...prevState,
+            general:
+              response?.data?.message ||
+              "Failed to send OTP. Please try again.",
+          }));
         }
-      );
+      } catch (err) {
+        setError((prevState) => ({
+          ...prevState,
+          general:
+            err?.response?.data?.message ||
+            "Failed to send OTP. Please try again.",
+        }));
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      setLoading(true);
+      try {
+        const response = await httpServices.post(
+          "/verify-otp",
 
-      const userId = response?.data?.user?.id;
-      const token = response?.data?.token;
-      dispatch(loginAction({ token, userId }));
-
-      const toastOptions = {
-        mode: "success",
-        message: "Login successful! Welcome back.",
-      };
-      Toast(toastOptions);
-    } catch (err) {
-      setError((prevState) => ({
-        ...prevState,
-        general:
-          err.response?.data?.message || "Login failed. Please try again.",
-      }));
-    } finally {
-      setLoading(false);
+          {
+            mobile_no: mobileNumber,
+            otp: otp,
+          }
+        );
+        if (response?.data?.success) {
+          const userId = response?.data?.user?.id;
+          const token = response?.data?.token;
+          dispatch(loginAction({ token, userId }));
+          Toast({
+            mode: "success",
+            message: "Login successful! Welcome back.",
+          });
+        }
+      } catch (err) {
+        setError((prevState) => ({
+          ...prevState,
+          otp: "Invalid OTP. Please try again.",
+        }));
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
   return (
     <div className="login-page-container">
-      
-      <div className="container my-3 py-3">
-        <div className="text-center page-title">Login</div>
-        <div className="row my-4 h-100">
-          <div className="col-md-4 col-lg-4 col-sm-8 mx-auto">
+      <div className="login-page container my-3 py-3">
+        <div className="login-icon-container">
+          <SVG src={LoginIcon} />
+        </div>
+        <div className="otp-title">
+          {isOtpSent ? "Verification Code" : "OTP Verification"}
+        </div>
+        <div className="otp-note">
+          {isOtpSent
+            ? "Enter the verification code sent to your SMS"
+            : "Enter phone number to send one time Password"}
+        </div>
+
+        <div className="row mobile-number-container">
+          <div className="inputs-container col-md-4 col-lg-4 col-sm-8 mx-auto">
             <form onSubmit={handleSubmit}>
-              <div className="my-3">
-                <Input
-                  label="Email address"
-                  placeholder="name@example.com"
-                  inputValue={email}
-                  setInputValue={setEmail}
-                  errorMsg={error.email}
-                />
-              </div>
-              <div className="my-3">
-                <Input
-                  label="Password"
-                  placeholder="Password"
-                  inputValue={password}
-                  setInputValue={setPassword}
-                  type="password"
-                />
-              </div>
+              {!isOtpSent && (
+                <div className="my-3">
+                  <Input
+                    label="Mobile Number"
+                    placeholder="+962 7XXXXXXXX"
+                    inputValue={mobileNumber}
+                    setInputValue={setMobileNumber}
+                    errorMsg={error.mobileNumber}
+                    type="tel"
+                    required={false}
+                  />
+                </div>
+              )}
+              {isOtpSent && (
+                <div className="my-3">
+                  <OTPInput onChange={setOtp} />
+                </div>
+              )}
               {error.general && (
                 <div className="alert alert-danger">{error.general}</div>
               )}
-              <div className="my-3">
-                <p>
-                  New Here?{" "}
-                  <Link
-                    to="/register"
-                    className="text-decoration-underline link-button"
-                  >
-                    Register
-                  </Link>
-                </p>
-              </div>
               <div className="text-center">
                 <button
                   className="my-2 mx-auto btn login-button"
                   type="submit"
-                  disabled={loading || !email || !password}
+                  disabled={loading || !mobileNumber || (isOtpSent && !otp)}
                 >
-                  {loading ? "Logging in..." : "Login"}
+                  {loading
+                    ? isOtpSent
+                      ? "Verifying OTP..."
+                      : "Sending OTP..."
+                    : isOtpSent
+                    ? "Submit OTP"
+                    : "Send OTP"}
                 </button>
               </div>
             </form>
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
